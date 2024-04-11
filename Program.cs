@@ -4,11 +4,11 @@
     {
         static void Main(string[] args)
         {
-            Character hero = new();
-            Character villain = new();
+            Character hero = new("Shrek");
+            Character villain = new("Dragon");
 
-            hero.Create("Shrek");
-            villain.Create("Dragon");
+            hero.NewTraits();
+            villain.NewTraits();
 
             hero.StatusWindow();
             Console.WriteLine();
@@ -19,9 +19,9 @@
             BattlePhase(hero, villain);
         }
 
-        public class Character
+        public class Character(string name)
         {
-            public string name = "";
+            public string name = name;
             public int lifePoints = 20;
             public int traitStr = 5;
             public int traitDef = 0;
@@ -31,14 +31,13 @@
             public void Attack(Character defender) =>
                 defender.lifePoints -= traitStr - defender.traitDef;
 
-            public void Create(string characterName)
+            public void NewTraits()
             {
                 var rand = new Random();
 
-                name = characterName;
-                lifePoints += rand.Next() % 10;
-                traitStr += rand.Next() % 5;
-                traitDef += rand.Next() % 5;
+                lifePoints = 20 + rand.Next() % 10;
+                traitStr = 5 + rand.Next() % 5;
+                traitDef = rand.Next() % 5;
             }
 
             public void StatusWindow()
