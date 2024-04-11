@@ -7,12 +7,12 @@
             Character hero = new();
             Character villain = new();
 
-            CreateCharacter(hero, "Shrek");
-            CreateCharacter(villain, "Dragon");
+            hero.Create("Shrek");
+            villain.Create("Dragon");
 
-            CharacterStatusWindows(hero);
+            hero.StatusWindow();
             Console.WriteLine();
-            CharacterStatusWindows(villain);
+            villain.StatusWindow();
 
             Console.WriteLine("\n-----------------------------------\n");
 
@@ -30,26 +30,26 @@
 
             public void Attack(Character defender) =>
                 defender.lifePoints -= traitStr - defender.traitDef;
-        }
 
-        public static void CreateCharacter(Character character, string name)
-        {
-            var rand = new Random();
+            public void Create(string characterName)
+            {
+                var rand = new Random();
 
-            character.name = name;
-            character.lifePoints += rand.Next() % 10;
-            character.traitStr += rand.Next() % 5;
-            character.traitDef += rand.Next() % 5;
-        }
+                name = characterName;
+                lifePoints += rand.Next() % 10;
+                traitStr += rand.Next() % 5;
+                traitDef += rand.Next() % 5;
+            }
 
-        public static void CharacterStatusWindows(Character character)
-        {
-            Console.WriteLine("===================================");
-            Console.WriteLine($"Status windows: {character.name}");
-            Console.WriteLine("===================================");
-            Console.WriteLine("LP: " + character.lifePoints);
-            Console.WriteLine("Strength: " + character.traitStr);
-            Console.WriteLine("Defense: " + character.traitDef);
+            public void StatusWindow()
+            {
+                Console.WriteLine("===================================");
+                Console.WriteLine($"Status windows: {name}");
+                Console.WriteLine("===================================");
+                Console.WriteLine("LP: " + lifePoints);
+                Console.WriteLine("Strength: " + traitStr);
+                Console.WriteLine("Defense: " + traitDef);
+            }
         }
 
         public static void BattlePhase(Character hero, Character villain)
@@ -69,7 +69,7 @@
                 attacker.Attack(defender);
                 damage = attacker.traitStr - defender.traitDef;
 
-                Console.WriteLine($"Phase {phase}:");
+                Console.Write($"Phase {phase++}: ");
                 Console.WriteLine($"{attacker.name}'s turn to attack");
                 if (CriticalHit())
                 {
@@ -85,7 +85,6 @@
                     Console.WriteLine($"{defender.name} has {defender.lifePoints}LP left\n");
 
                 turn++;
-                phase++;
             }
         }
 
